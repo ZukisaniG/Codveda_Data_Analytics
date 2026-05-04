@@ -2,23 +2,29 @@
 
 ## Project Overview
 
-This project is a data analytics project completed as part of the Codveda Data Analytics task list. The project uses a stock prices dataset to perform data cleaning, exploratory data analysis, basic data visualization, regression analysis, and interactive dashboard creation using Tableau.
+This project is a data analytics project completed as part of the Codveda Data Analytics task list. The project demonstrates a full data analytics workflow using Python, Tableau, and machine learning techniques.
 
-The main goal of the project is to clean and analyze stock price data, identify trends and relationships, build a simple predictive model, and present insights through an interactive dashboard.
+The project focuses mainly on stock prices data, which was used for data cleaning, exploratory data analysis, basic visualization, regression analysis, time-series analysis, and dashboard development. A separate sentiment dataset was also used for natural language processing and sentiment analysis.
+
+The main goal of the project is to clean, analyse, visualise, model, and present data insights in a clear and practical way.
 
 ---
 
-## Dataset
+## Datasets Used
 
-The dataset used in this project is:
+The project uses two datasets:
+
+### 1. Stock Prices Dataset
+
+File:
 
 `2) Stock Prices Data Set.csv`
 
-After cleaning, the final dataset was saved as:
+Cleaned version:
 
 `cleaned_stock_prices.csv`
 
-The dataset contains stock market information with the following fields:
+The stock prices dataset contains stock market information with the following fields:
 
 - Symbol
 - Date
@@ -30,6 +36,14 @@ The dataset contains stock market information with the following fields:
 
 The dataset contains 497,472 rows and 7 columns.
 
+### 2. Sentiment Dataset
+
+File:
+
+`3) Sentiment dataset.csv`
+
+The sentiment dataset contains textual data used for natural language processing and sentiment analysis.
+
 ---
 
 ## Tools and Technologies Used
@@ -39,6 +53,10 @@ The dataset contains 497,472 rows and 7 columns.
 - matplotlib
 - seaborn
 - scikit-learn
+- statsmodels
+- nltk
+- TextBlob
+- WordCloud
 - Tableau
 - VS Code
 - Jupyter Notebook
@@ -46,22 +64,24 @@ The dataset contains 497,472 rows and 7 columns.
 
 ---
 
-## Project Tasks Completed
+# Tasks Completed
 
 ## Level 1: Task 1 - Data Cleaning and Preprocessing
 
-The raw stock prices dataset was loaded using pandas. The dataset was inspected for missing values, duplicate rows, incorrect data types, and inconsistent formats.
+The raw stock prices dataset was loaded using pandas and inspected for missing values, duplicate rows, data types, and inconsistent formats.
 
 Cleaning steps included:
 
-- Loaded the CSV file using pandas
-- Checked the shape, column names, and data types
+- Loaded the dataset using pandas
+- Checked the number of rows and columns
+- Checked column names and data types
 - Identified missing values
-- Found missing values in the `open`, `high`, and `low` columns
 - Checked for duplicate rows
-- Converted the `date` column into datetime format
+- Standardized column names
+- Converted the `date` column to datetime format
+- Sorted the data by `symbol` and `date`
+- Filled missing values in price-related columns
 - Standardized the `symbol` column
-- Filled missing stock price values using logical methods
 - Saved the cleaned dataset as `cleaned_stock_prices.csv`
 
 Missing values found:
@@ -70,25 +90,29 @@ Missing values found:
 - `high`: 8 missing values
 - `low`: 8 missing values
 
-There were no duplicate rows in the dataset.
+No duplicate rows were found.
 
 ---
 
 ## Level 1: Task 2 - Exploratory Data Analysis
 
-Exploratory Data Analysis was performed to understand the dataset and identify patterns, trends, and relationships.
+Exploratory Data Analysis was performed on the cleaned stock prices dataset to understand patterns, trends, and relationships.
 
 EDA steps included:
 
 - Calculated summary statistics
 - Calculated mean, median, mode, and standard deviation
-- Created histograms to understand data distributions
+- Created histograms to show data distributions
 - Created boxplots to identify spread and possible outliers
 - Created scatter plots to examine relationships between variables
 - Calculated correlations between numerical features
 - Created a correlation heatmap
 
-The analysis showed that stock price variables such as `open`, `high`, `low`, and `close` are strongly correlated with each other. This is expected because they all represent price movements within the same trading period.
+Key findings:
+
+- The stock price columns `open`, `high`, `low`, and `close` were strongly correlated.
+- This strong relationship is expected because these fields all describe stock price movement during the same trading period.
+- Trading volume behaved differently from the price variables and showed weaker relationships with stock prices.
 
 ---
 
@@ -98,12 +122,24 @@ Basic visualizations were created using matplotlib and seaborn.
 
 Visualizations created:
 
-- Bar plot showing top stocks by average trading volume
+- Bar chart showing top stocks by average trading volume
 - Line chart showing average closing price over time
 - Scatter plot showing the relationship between opening price and closing price
-- Scatter plot showing the relationship between volume and closing price
+- Scatter plot showing the relationship between trading volume and closing price
 
-The charts were customized with clear titles, axis labels, and legends. The visualizations were also exported as image files for reporting purposes.
+The charts were customized with:
+
+- Clear titles
+- Axis labels
+- Legends where needed
+- Exported image files for reporting
+
+Output images include:
+
+- `top_10_stocks_by_volume.png`
+- `average_closing_price_over_time.png`
+- `open_vs_close_scatter.png`
+- `volume_vs_close_scatter.png`
 
 ---
 
@@ -117,19 +153,55 @@ Model setup:
 
 - Independent variable: `open`
 - Dependent variable: `close`
-- Train-test split: 80% training data and 20% testing data
 - Model used: Linear Regression
+- Training and testing split: 80% training data and 20% testing data
 
-The model was evaluated using:
+Evaluation metrics used:
 
 - Mean Squared Error
 - R-squared score
 
-The regression analysis showed a strong positive relationship between opening price and closing price. This means that stocks with higher opening prices generally also have higher closing prices.
+Key finding:
+
+The regression analysis showed a strong positive relationship between opening price and closing price. This means that stocks with higher opening prices generally also had higher closing prices.
+
+Output image:
+
+- `simple_linear_regression_open_vs_close.png`
 
 ---
 
-## Tableau Dashboard
+## Level 2: Task 2 - Time Series Analysis
+
+Time-series analysis was performed using the cleaned stock prices dataset.
+
+The analysis focused on stock closing prices over time.
+
+Steps completed:
+
+- Converted the `date` column to datetime format
+- Selected a stock symbol for analysis
+- Plotted the original closing price over time
+- Applied moving average smoothing
+- Created 30-day and 90-day moving averages
+- Resampled daily data into monthly average closing prices
+- Decomposed the time series using statsmodels
+- Separated the series into trend, seasonality, and residual components
+
+Output images include:
+
+- `closing_price_over_time.png`
+- `moving_average_smoothing.png`
+- `time_series_decomposition.png`
+- `AAPL_closing_price_over_time.png`
+
+Key finding:
+
+Moving averages helped smooth short-term price fluctuations and made the overall trend easier to observe. Time-series decomposition helped separate the stock price movement into trend, seasonal, and residual components.
+
+---
+
+## Level 3: Task 2 - Building Dashboards with Tableau
 
 An interactive dashboard was created using Tableau.
 
@@ -139,64 +211,98 @@ Dashboard title:
 
 The dashboard includes:
 
-- Line chart: Average Closing Price Over Time
-- Scatter plot: Open Price vs Close Price
-- Bar chart: Average Volume by Stock Symbol
+- Line chart showing average closing price over time
+- Scatter plot showing the relationship between average opening price and average closing price
+- Bar chart showing average trading volume by stock symbol
 - Symbol filter
 - Date filter
 
-The dashboard allows users to interactively explore stock price trends, compare trading volume, and examine the relationship between opening and closing prices.
+The dashboard allows users to interactively explore:
 
----
-
-## Tableau Story
+- Stock price trends
+- Trading volume comparisons
+- Relationships between opening and closing prices
+- Selected stocks and selected time periods
 
 A Tableau Story was also created to explain the dashboard insights step by step.
 
-Story title:
+Tableau workbook file:
 
-`Stock Prices Analysis Story`
-
-The story explains:
-
-- Overall dashboard purpose
-- Closing price trends over time
-- Relationship between opening and closing prices
-- Trading volume comparison by stock symbol
+`Stock_Prices_Analysis_Dashboard.twbx`
 
 ---
 
-## Key Insights
+## Level 3: Task 3 - Natural Language Processing Sentiment Analysis
 
-The main insights from the project are:
+Sentiment analysis was performed on a textual dataset using Python, nltk, TextBlob, pandas, matplotlib, and WordCloud.
 
-- The dataset had missing values in the `open`, `high`, and `low` columns.
-- No duplicate rows were found.
-- Stock price variables are strongly related to each other.
-- Opening price and closing price have a strong positive relationship.
-- Some stocks have much higher average trading volume than others.
-- Tableau filters make it easier to explore selected stocks and time periods.
+Steps completed:
+
+- Loaded the sentiment dataset
+- Inspected the dataset structure and missing values
+- Selected the main text column for analysis
+- Cleaned the text data
+- Converted text to lowercase
+- Removed URLs, mentions, hashtags, punctuation, numbers, and special characters
+- Removed stopwords
+- Applied lemmatization
+- Used TextBlob to calculate sentiment polarity scores
+- Classified text as Positive, Negative, or Neutral
+- Visualized sentiment distribution
+- Created a word cloud showing frequent words
+- Saved the sentiment analysis results as a CSV file
+
+Output files include:
+
+- `sentiment_analysis_results.csv`
+- `sentiment_distribution.png`
+- `word_cloud.png`
+
+Key finding:
+
+The NLP analysis classified text entries into sentiment categories and showed the overall distribution of positive, negative, and neutral sentiment. The word cloud helped identify frequently used words in the cleaned text data.
 
 ---
 
-## Project Files
+# Project Files
 
 The repository contains:
 
-- `task_1_data_cleaning.ipynb`
-- `task_2_eda.ipynb`
-- `task_3_visualization.ipynb`
-- `level_2_regression_analysis.ipynb`
-- `cleaned_stock_prices.csv`
-- `visualizations/`
-- `Stock_Prices_Analysis_Dashboard.twbx`
 - `README.md`
+- `2) Stock Prices Data Set.csv`
+- `3) Sentiment dataset.csv`
+- `cleaned_stock_prices.csv`
+- `sentiment_analysis_results.csv`
+- `Stock_Prices_Analysis_Dashboard.twbx`
+
+Notebook files:
+
+- `task_1_data_cleaning.ipynb`
+- `task_2_exploratory_data_analysis.ipynb`
+- `task_3_basic_data_visualisation.ipynb`
+- `task_1_regression_analysis.ipynb`
+- `task_2_time_series_analysis.ipynb`
+- `task_3_nlp_sentiment_analysis.ipynb`
+
+Visualization files:
+
+- `average_closing_price_over_time.png`
+- `top_10_stocks_by_volume.png`
+- `open_vs_close_scatter.png`
+- `volume_vs_close_scatter.png`
+- `simple_linear_regression_open_vs_close.png`
+- `closing_price_over_time.png`
+- `moving_average_smoothing.png`
+- `time_series_decomposition.png`
+- `AAPL_closing_price_over_time.png`
+- `sentiment_distribution.png`
+- `word_cloud.png`
 
 ---
 
-## How to Run the Python Files
+# How to Run the Project
 
-1. Clone this repository:
+## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/stock-prices-data-analytics.git
+git clone https://github.com/your-username/Codveda_Data_Analytics.git
