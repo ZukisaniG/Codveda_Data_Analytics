@@ -305,4 +305,4 @@ Visualization files:
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Codveda_Data_Analytics.git
+https://github.com/ZukisaniG/Codveda_Data_Analytics.git
